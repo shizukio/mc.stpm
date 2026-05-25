@@ -1,0 +1,14 @@
+# サーバー側のデバッグモード
+debug:
+  enabled: true
+
+# レンダー関連
+render:
+  # レンダー間隔
+  interval: 2L
+  # 詳細表示パーティクルの色
+  color: "#00ffff"
+  # 最高距離
+  max-distance: 50
+  # 詳細表示をする距離
+  detail-distance: 10

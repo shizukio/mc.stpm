@@ -1,0 +1,13 @@
+name: stpm
+version: '${version}'
+
+main: com.shizukio.mc.stpm.paper.StpmPaperPlugin
+api-version: '1.21.4'
+load: POSTWORLD
+
+authors: [ Shizukio ]
+website: https://mc.shizukio.com
+
+commands:
+  stpm:
+    description: stpm command

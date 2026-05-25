@@ -1,0 +1,25 @@
+# Gradle
+.gradle/
+build/
+**/build/
+
+# Kotlin
+.kotlin/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+out/
+
+# Minecraft local server/runtime files
+run/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.log
+
+# Java
+*.class
+hs_err_pid*
+replay_pid*

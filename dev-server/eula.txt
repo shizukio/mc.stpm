@@ -1,0 +1,4 @@
+# このファイルは開発用 test server に同期されます。
+# eula=true は Minecraft EULA に同意した状態でローカル検証を始めるための設定です。
+# https://aka.ms/MinecraftEULA
+eula=true
