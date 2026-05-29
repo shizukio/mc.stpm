@@ -26,6 +26,32 @@ object Cfg {
         get() = StpmBukkitRuntime.plugin.config
 
     // ----------------------------------------------------------------
+    // command
+    // ----------------------------------------------------------------
+
+    /**
+     * /stpm command permission enabled.
+     *
+     * true:
+     *   command.permission.node の permission を持つ sender だけが /stpm を使えます。
+     *
+     * false:
+     *   permission check を行わず、従来通り誰でも /stpm を使えます。
+     */
+    var commandPermissionEnabled: Boolean =
+        true
+        private set
+
+    /**
+     * /stpm command permission node.
+     *
+     * permission plugin では、この node を player / group に付与します。
+     */
+    var commandPermissionNode: String =
+        "stpm.command"
+        private set
+
+    // ----------------------------------------------------------------
     // debug
     // ----------------------------------------------------------------
 
@@ -87,6 +113,27 @@ object Cfg {
         // shortcut
         val config =
             bukkitConfig
+
+        // ------------------------------------------------------------
+        // command
+        // ------------------------------------------------------------
+
+        commandPermissionEnabled =
+            config.getBoolean(
+                "command.permission.enabled",
+                true
+            )
+
+        commandPermissionNode =
+            config.getString(
+                "command.permission.node"
+            )
+                ?.trim()
+                ?.takeIf { permissionNode ->
+
+                    permissionNode.isNotEmpty()
+                }
+                ?: "stpm.command"
 
         // ------------------------------------------------------------
         // debug

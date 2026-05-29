@@ -16,7 +16,10 @@ import org.bukkit.plugin.java.JavaPlugin
 class StpmPaperPlugin : JavaPlugin() {
 
     override fun onLoad() {
-        StpmBukkitRuntime.onLoad(this)
+        StpmBukkitRuntime.onLoad(
+            this,
+            PaperAdventureMessageSender
+        )
     }
 
     override fun onEnable() {

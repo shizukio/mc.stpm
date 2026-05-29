@@ -56,17 +56,51 @@ Paper サーバーでは `stpm-paper` の jar を使います。
 - Paper 専用 API を使う処理は `stpm-paper` に置きます。
 - `org.bukkit`、`io.papermc`、`dev.jorel.commandapi` を import する class は `stpm-core` に置きません。
 
+## コマンド権限
+
+`/stpm` コマンド全体の permission は `config.yml` で設定できます。
+
+```yaml
+command:
+  permission:
+    enabled: true
+    node: "stpm.command"
+```
+
+`enabled: true` の場合、`node` に設定した permission を持つ player / command sender だけが `/stpm` を使えます。
+
+`enabled: false` にすると、permission check を行わず誰でも `/stpm` を使えます。
+
+標準の permission node は `stpm.command` です。`plugin.yml` では `default: op` にしているため、OP は標準で `/stpm` を使えます。
+
+LuckPerms で一般 player に許可する例:
+
+```text
+/lp group default permission set stpm.command true
+```
+
 ## Paper テストサーバーの起動
 
 ```powershell
 .\gradlew.bat :stpm-paper:runServer
 ```
 
-`runServer` を実行すると、`dev-server/` にある共有設定が `run/` へ自動で同期されます。
+`runServer` は `dev-server/run/<ローダー>/` を作業ディレクトリとして使います。
 
-現在同期している主な設定:
+そして、`dev-server` 直下のファイルは作業ディレクトリにコピーされます。以下は例
 
 - `dev-server/server.properties`
 - `dev-server/eula.txt`
 
-`run/` はワールド、ログ、サーバー jar などが生成される作業ディレクトリなので git 管理しません。共有したいサーバー設定は `run/` ではなく `dev-server/` 側を編集してください。
+共有したいサーバー設定は `dev-server/` 側を編集してください。
+
+## Purpur テストサーバーの起動
+
+Purpur は Paper 互換 server として扱い、`stpm-paper` の jar を読み込んで起動確認します。
+
+```powershell
+.\gradlew.bat :stpm-paper:runPurpurServer
+```
+
+初回実行時は Purpur の server jar を `build/run-server/purpur/` へダウンロードします。
+

@@ -8,6 +8,7 @@ load: POSTWORLD
 authors: [ Shizukio ]
 website: https://mc.shizukio.com
 
-commands:
-  stpm:
-    description: stpm command
+permissions:
+  stpm.command:
+    description: Allows using the /stpm command.
+    default: op

@@ -1,5 +1,6 @@
 package com.shizukio.mc.stpm.commands
 
+import com.shizukio.mc.stpm.Cfg
 import com.shizukio.mc.stpm.commands.subcommands.Create
 import com.shizukio.mc.stpm.commands.subcommands.Debug
 import com.shizukio.mc.stpm.commands.subcommands.List
@@ -26,7 +27,23 @@ object StpmCommands {
      */
     fun register() {
 
-        CommandAPICommand("stpm")
+        val command =
+            CommandAPICommand("stpm")
+
+        /**
+         * /stpm 全体の permission.
+         *
+         * CommandAPI は root command に設定した permission を
+         * subcommand へも引き継いでくれます。
+         */
+        if (Cfg.commandPermissionEnabled) {
+
+            command.withPermission(
+                Cfg.commandPermissionNode
+            )
+        }
+
+        command
 
             /**
              * /stpm debug

@@ -6,25 +6,35 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import org.bukkit.command.CommandSender
 
 /**
- * Adventure Component message sender.
+ * Adventure Component message sender contract.
  *
- * Paper では sender.sendMessage(Component) が使えますが、
- * Bukkit/Spigot API では Component を直接受け取る overload がありません。
+ * Bukkit と Paper では「Component をどう送れるか」が違います。
+ * その差分をこの interface で吸収します。
+ */
+interface AdventureMessageSender {
+
+    fun send(
+        sender: CommandSender,
+        message: ComponentLike
+    )
+}
+
+/**
+ * Bukkit/Spigot fallback sender.
  *
- * core は Bukkit 系 loader でも動く必要があるため、
- * 送信直前に Bukkit が確実に受け取れる legacy text へ変換します。
+ * Bukkit/Spigot API では Component を直接受け取る sendMessage overload がないため、
+ * legacy text へ変換して送ります。
  *
  * 注意:
- * legacy text へ変換すると ClickEvent / HoverEvent のような
- * クリック可能 UI は表現できません。
- * 将来 Paper 専用 UI を作る場合は stpm-paper 側で adapter を分けます。
+ * legacy text へ変換すると ClickEvent / HoverEvent / copyToClipboard は失われます。
+ * Paper jar では stpm-paper 側の sender に差し替えるため、クリック可能 UI が維持されます。
  */
-object AdventureMessages {
+object LegacyAdventureMessageSender : AdventureMessageSender {
 
     private val serializer =
         LegacyComponentSerializer.legacySection()
 
-    fun send(
+    override fun send(
         sender: CommandSender,
         message: ComponentLike
     ) {
@@ -33,6 +43,29 @@ object AdventureMessages {
             serializer.serialize(
                 message.asComponent()
             )
+        )
+    }
+}
+
+/**
+ * Runtime message sender facade.
+ *
+ * command や UI 側はこの object だけを使います。
+ * 実際の送信方法は loader module が起動時に差し替えます。
+ */
+object AdventureMessages {
+
+    var sender: AdventureMessageSender =
+        LegacyAdventureMessageSender
+
+    fun send(
+        receiver: CommandSender,
+        message: ComponentLike
+    ) {
+
+        sender.send(
+            receiver,
+            message
         )
     }
 }

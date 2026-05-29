@@ -182,7 +182,7 @@ object MarkerListUi {
                         HoverEvent.showText(
 
                             Component.text(
-                                "Click to copy location"
+                                "Click to copy (xyz / ${location.x} ${location.y} ${location.z})"
                             )
                         )
                     )

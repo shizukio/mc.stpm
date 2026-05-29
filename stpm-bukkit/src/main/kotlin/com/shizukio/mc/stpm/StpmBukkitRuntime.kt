@@ -4,7 +4,10 @@ import com.shizukio.mc.stpm.commands.StpmCommands
 import com.shizukio.mc.stpm.debug.DebugRenderer
 import com.shizukio.mc.stpm.services.MarkerService
 import com.shizukio.mc.stpm.state.PlayerState
+import com.shizukio.mc.stpm.utils.AdventureMessageSender
+import com.shizukio.mc.stpm.utils.AdventureMessages
 import com.shizukio.mc.stpm.utils.Console
+import com.shizukio.mc.stpm.utils.LegacyAdventureMessageSender
 
 import dev.jorel.commandapi.CommandAPI
 import dev.jorel.commandapi.CommandAPIBukkitConfig
@@ -68,11 +71,18 @@ object StpmBukkitRuntime {
      * runtime 側でも onLoad/onEnable を分けています。
      */
     fun onLoad(
-        loaderPlugin: JavaPlugin
+        loaderPlugin: JavaPlugin,
+        messageSender: AdventureMessageSender =
+            LegacyAdventureMessageSender
     ) {
 
         plugin =
             loaderPlugin
+
+        // Bukkit 版は legacy text sender、Paper 版は Component sender を渡します。
+        // /stpm list のクリック・hover などは、この sender が Component を保持できるかに依存します。
+        AdventureMessages.sender =
+            messageSender
 
         CommandAPI.onLoad(
             CommandAPIBukkitConfig(loaderPlugin)
@@ -85,6 +95,15 @@ object StpmBukkitRuntime {
      * Bukkit/Paper の onEnable から呼ばれます。
      */
     fun onEnable() {
+
+        /**
+         * jar 内の config.yml を plugin data folder へコピーします。
+         *
+         * 既に config.yml がある場合は上書きしません。
+         * 既存サーバーでは新しい項目が自動追記されないため、
+         * 必要に応じて手動で config.yml へ追加してください。
+         */
+        plugin.saveDefaultConfig()
 
         Cfg.reload()
 

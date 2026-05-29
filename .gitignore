@@ -14,6 +14,10 @@ out/
 # Minecraft local server/runtime files
 run/
 
+# runServer uses dev-server/run as its working directory.
+# Keep shared config files, ignore generated server data.
+dev-server/run/
+
 # OS / editor noise
 .DS_Store
 Thumbs.db
