@@ -1,7 +1,7 @@
-rootProject.name = "stpm"
+rootProject.name = "warpmarker"
 
 include(
-    "stpm-core",
-    "stpm-bukkit",
-    "stpm-paper"
+    "warpmarker-core",
+    "warpmarker-bukkit",
+    "warpmarker-paper"
 )

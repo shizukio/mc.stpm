@@ -1,0 +1,32 @@
+# コマンド権限
+command:
+  permission:
+    # true:
+    #   node に設定した permission を持つ player / command sender だけが /warpmarker を使えます。
+    #
+    # false:
+    #   permission check を行わず、誰でも /warpmarker を使えます。
+    enabled: true
+
+    # /warpmarker 全体に必要な permission node です。
+    #
+    # LuckPerms などを使う場合:
+    #   /lp group default permission set warpmarker.command true
+    #
+    # OP は plugin.yml の default: op により、この permission を持ちます。
+    node: "warpmarker.command"
+
+# サーバー側のデバッグモード
+debug:
+  enabled: true
+
+# レンダー関連
+render:
+  # レンダー間隔
+  interval: 2L
+  # 詳細表示パーティクルの色
+  color: "#00ffff"
+  # 最高距離
+  max-distance: 50
+  # 詳細表示をする距離
+  detail-distance: 10

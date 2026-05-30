@@ -1,0 +1,14 @@
+name: warpmarker
+version: '${version}'
+
+main: com.shizukio.mc.warpmarker.paper.WarpMarkerPaperPlugin
+api-version: '1.21.4'
+load: POSTWORLD
+
+authors: [ Shizukio ]
+website: https://mc.shizukio.com
+
+permissions:
+  warpmarker.command:
+    description: Allows using the /warpmarker command.
+    default: op
